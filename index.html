@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login UI</title>
+
+  <!-- LINK TO EXTERNAL CSS -->
+  <link rel="stylesheet" href="index.css" />
+
+  <script>
+    window.onload = function () {
+      const savedEmail = localStorage.getItem("savedEmail");
+      if (savedEmail) {
+        document.getElementById("email").value = savedEmail;
+        document.getElementById("rememberMe").checked = true;
+      }
+    };
+
+    function handleLogin(event) {
+      event.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const remember = document.getElementById("rememberMe").checked;
+
+      if (email === "" || password === "") {
+        alert("Please enter both email and password.");
+        return;
+      }
+
+      if (remember) {
+        localStorage.setItem("savedEmail", email);
+      } else {
+        localStorage.removeItem("savedEmail");
+      }
+
+      document.getElementById("loadingOverlay").style.display = "flex";
+
+      setTimeout(() => {
+        window.location.href = "spottestmainpage.html";
+      }, 1000);
+    }
+  </script>
+</head>
+
+<body>
+
+<div id="loadingOverlay">Logging in...</div>
+
+<div class="card">
+  <div class="logo">COMPANY NAME</div>
+  <div class="subtitle">Get personalized movie recommendations based on your Spotify activity</div>
+
+  <a href="https://accounts.spotify.com/en/login?continue=https%3A%2F%2Fopen.spotify.com%2F" class="spotify-btn">
+    Continue with Spotify
+  </a>
+
+  <hr class="divider" />
+  Or with email
+  <hr class="divider" />
+
+  <form onsubmit="handleLogin(event)">
+    <input id="email" type="email" placeholder="Email or username" required />
+    <input id="password" type="password" placeholder="Password" required />
+
+    <div class="options">
+      <label><input type="checkbox" id="rememberMe" /> Keep me signed in</label>
+      <a href="#" style="color: #1db954">Forgot password?</a>
+    </div>
+
+    <button type="submit" class="login-btn">Login</button>
+  </form>
+
+  <div class="footer">
+    By continuing to our Terms and Privacy Policy · Contact an admin
+    <br><br>
+    Privacy Policy | Terms & Conditions
+  </div>
+</div>
+
+</body>
+</html>
